@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.bookstore.mapper.UserMapper">
+    <select id="selectUser" resultType="User">
+        select * from user where account=#{account}
+    </select>
+    <select id="login" resultType="User">
+        select * from user where account=#{account} and identity=#{identity}
+    </select>
+
+    <insert id="insertUser" parameterType="user">
+        insert into user(uid,account,password,identity,uname,himg)
+        value (null,#{account},#{password},#{identity},#{uname},#{himg})
+    </insert>
+
+    <select id="getUserByUid" parameterType="int" resultType="user">
+        select * from user where uid=#{uid}
+    </select>
+
+    <update id="updateUserName">
+        update user set uname=#{uname} where uid=#{uid}
+    </update>
+
+    <update id="changePassword">
+        update user set password=#{password} where uid=#{uid}
+    </update>
+
+    <!-- 用户添加收货地址 -->
+    <insert id="insertAddress">
+        insert into address(uid,name,address,phone)
+        value (#{uid},#{name},#{address},#{phone})
+    </insert>
+
+    <select id="listAddress" parameterType="int" resultType="address">
+        select * from address a join user u on a.uid=u.uid
+        where a.uid=#{uid}
+    </select>
+
+    <update id="updateAddress">
+        update address set name=#{name},address=#{address},phone=#{phone} where aid=#{aid}
+    </update>
+    <delete id="deleteAddress">
+        delete from address where aid=#{aid}
+    </delete>
+    <select id="listUser" resultType="User">
+        select * from user
+    </select>
+    <delete id="deleteUser">
+        delete from user where uid=#{uid}
+    </delete>
+    <update id="updateHimg">
+        update user set himg=#{himg} where uid=#{uid}
+    </update>
+</mapper>
